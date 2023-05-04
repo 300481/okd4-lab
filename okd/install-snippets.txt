@@ -1,0 +1,30 @@
+# download client and installer
+wget https://github.com/okd-project/okd/releases/download/4.12.0-0.okd-2023-02-18-033438/openshift-client-linux-4.12.0-0.okd-2023-02-18-033438.tar.gz
+wget https://github.com/okd-project/okd/releases/download/4.12.0-0.okd-2023-02-18-033438/openshift-install-linux-4.12.0-0.okd-2023-02-18-033438.tar.gz
+
+tar xvzf openshift-client-linux-4.12.0-0.okd-2023-02-18-033438.tar.gz
+tar xvzf openshift-install-linux-4.12.0-0.okd-2023-02-18-033438.tar.gz
+
+alias coreos-installer='podman run --privileged --pull always --rm \
+        -v /dev:/dev \
+        -v /run/udev:/run/udev \
+        -v /home/dennis/ocp:/data \
+        -w /data quay.io/coreos/coreos-installer:release'
+
+# download the FCOS image
+wget -O fcos.iso $(./openshift-install coreos print-stream-json | grep location | grep x86 | grep iso | cut -d\" -f4)
+
+# create ignition
+cp install-config.yaml config/
+TODO: ./openshift-install create ???? --dir config/
+
+# set kernel args for ISO
+coreos-installer iso kargs modify -a "ip=192.168.0.151::192.168.0.1:255.255.255.0::enp1s0:none nameserver=192.168.0.200 coreos.inst.install_dev=/dev/vda coreos.inst.image_url=http://192.168.0.200:8080/okd4/fcos.raw.xz coreos.inst.ignition_url=http://192.168.0.200:8080/okd4/bootstrap.ign" fcos-bootstrap.iso
+coreos-installer iso kargs modify -a "ip=192.168.0.150::192.168.0.1:255.255.255.0::enp1s0:none nameserver=192.168.0.200 coreos.inst.install_dev=/dev/vda coreos.inst.image_url=http://192.168.0.200:8080/okd4/fcos.raw.xz coreos.inst.ignition_url=http://192.168.0.200:8080/okd4/master.ign" fcos-master.iso
+
+coreos-installer iso kargs modify -a "ip=192.168.0.150::192.168.0.1:255.255.255.0:ocp.300481.de:enp1s0:none nameserver=8.8.8.8 nameserver=8.8.4.4" fcos-live.iso
+
+
+# embed ignition in ISO
+coreos-installer iso ignition embed -fi config/bootstrap.ign fcos-bootstrap.iso
+coreos-installer iso ignition embed -fi config/master.ign fcos-master.iso
