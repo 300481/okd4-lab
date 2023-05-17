@@ -11,6 +11,12 @@ alias coreos-installer='podman run --privileged --pull always --rm \
         -v /home/dennis/ocp:/data \
         -w /data quay.io/coreos/coreos-installer:release'
 
+alias butane='podman run --rm --interactive       \
+              --security-opt label=disable        \
+              --volume ${PWD}:/pwd --workdir /pwd \
+              quay.io/coreos/butane:release       \
+              --pretty --strict'
+
 # download the FCOS image
 wget -O fcos.iso $(./openshift-install coreos print-stream-json | grep location | grep x86 | grep iso | cut -d\" -f4)
 
