@@ -1,5 +1,5 @@
-@       IN      SOA     ns.okd. admin.okd. (
-        3         ; Serial
+@       IN      SOA     ns.lab. admin.lab. (
+        4         ; Serial
         604800    ; Refresh
         86400     ; Retry
         2419200   ; Expire
@@ -9,6 +9,6 @@
     IN      NS      ns.okd.
 
 ; PTR Records
-200    IN      PTR     ns.okd.
-151    IN      PTR     bootstrap.okd.   ; Bootstrap
-152    IN      PTR     master.okd.      ; Master
+200    IN      PTR     ns.lab.
+151    IN      PTR     bootstrap.okd.lab.   ; Bootstrap
+152    IN      PTR     master.okd.lab.      ; Master

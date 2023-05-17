@@ -1,6 +1,6 @@
-zone "okd" {
+zone "lab" {
   type master;
-  file "/etc/named/zones/db.okd"; # zone file path
+  file "/etc/named/zones/db.lab"; # zone file path
 };
 
 zone "0.168.192.in-addr.arpa" {
