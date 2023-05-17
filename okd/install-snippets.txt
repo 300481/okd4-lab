@@ -18,7 +18,7 @@ alias butane='podman run --rm --interactive       \
               --pretty --strict'
 
 # download the FCOS image
-wget -O fcos.iso $(./openshift-install coreos print-stream-json | grep location | grep x86 | grep iso | cut -d\" -f4)
+wget -O fcos.iso $(openshift-install coreos print-stream-json | grep location | grep x86 | grep iso | cut -d\" -f4)
 
 # create ignition
 cp install-config.yaml config/
