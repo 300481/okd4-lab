@@ -1,5 +1,5 @@
 @       IN      SOA     ns.lab. admin.lab. (
-        4          ; Serial
+        5          ; Serial
         604800     ; Refresh
         86400      ; Retry
         2419200    ; Expire
@@ -9,11 +9,11 @@
     IN      NS     ns.lab.
 
 ; name servers - A records
-ns.lab.           IN      A      192.168.0.200
-bootstrap.okd.lab IN      A      192.168.0.151 ; Bootstrap
-*.apps.okd.lab    IN      A      192.168.0.152 ; Master
-api.okd.lab       IN      A      192.168.0.152 ; Master
-api.okd.lab       IN      A      192.168.0.151 ; Bootstrap
-api-int.okd.lab   IN      A      192.168.0.152 ; Master
-api-int.okd.lab   IN      A      192.168.0.151 ; Bootstrap
-master.okd.lab    IN      A      192.168.0.152 ; Master
+ns.lab.            IN      A      192.168.0.200
+bootstrap.okd.lab. IN      A      192.168.0.151 ; Bootstrap
+*.apps.okd.lab.    IN      A      192.168.0.152 ; Master
+api.okd.lab.       IN      A      192.168.0.152 ; Master
+api.okd.lab.       IN      A      192.168.0.151 ; Bootstrap
+api-int.okd.lab.   IN      A      192.168.0.152 ; Master
+api-int.okd.lab.   IN      A      192.168.0.151 ; Bootstrap
+master.okd.lab.    IN      A      192.168.0.152 ; Master
