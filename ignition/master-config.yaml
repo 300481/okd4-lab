@@ -44,3 +44,10 @@ storage:
       contents:
         inline: |
           master.okd.lab
+kernel_arguments:
+  should_exist:
+    - ip=192.168.0.152::192.168.0.1:255.255.255.0::enp1s0:none
+    - nameserver=192.168.0.200
+    - coreos.inst.install_dev=/dev/vda
+    - coreos.inst.platform_id=qemu
+    - console=ttyS0
