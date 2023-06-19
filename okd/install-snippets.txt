@@ -23,10 +23,11 @@ wget -O fcos.iso $(openshift-install coreos print-stream-json | grep location | 
 # create ignition
 mkdir config
 cp okd/install-config.yaml config/
+openshift-install create manifests --dir config/
 openshift-install create ignition-configs --dir config/
 cp config/bootstrap.ign ignition/
 cp config/master.ign ignition/
-cd config
+cd ignition
 
 butane bootstrap-config.yaml -d . > bootstrap-merged.ign
 butane master-config.yaml -d . > master-merged.ign
@@ -41,5 +42,18 @@ coreos-installer iso kargs modify -a "ip=192.168.0.152::192.168.0.1:255.255.255.
 
 
 # embed ignition in ISO
-coreos-installer iso ignition embed -fi config/bootstrap.ign fcos-bootstrap.iso
-coreos-installer iso ignition embed -fi config/master.ign fcos-master.iso
+coreos-installer iso ignition embed -fi bootstrap-merged.ign fcos-bootstrap.iso
+coreos-installer iso ignition embed -fi master-merged.ign fcos-master.iso
+
+# install master
+
+boot fcos.iso
+
+run:
+
+sudo coreos-installer \
+    install \
+    /dev/sda \
+    --firstboot-args='console=tty0 rd.neednet=1 rd.net.timeout.carrier=30 coreos.inst.platform_id=qemu' \
+    --insecure-ignition \
+    --ignition-url=http://infra1.ocp4.example.com:8080/master.ign
