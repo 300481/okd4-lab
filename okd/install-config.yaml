@@ -28,3 +28,11 @@ platform:
   none: {}
 pullSecret: 
 sshKey: 
+imageContentSources:
+- mirrors:
+  - 192.168.0.200:5000/okd
+  source: quay.io/openshift/okd
+- mirrors:
+  - 192.168.0.200:5000/okd
+  source: quay.io/openshift/okd-content
+
