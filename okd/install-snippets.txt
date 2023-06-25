@@ -37,9 +37,10 @@ mv ignition/*merged* .
 # set kernel args for ISO
 cp fcos.iso fcos-bootstrap.iso
 cp fcos.iso fcos-master.iso
-coreos-installer iso kargs modify -a "ip=192.168.0.151::192.168.0.1:255.255.255.0::enp1s0:none nameserver=192.168.0.200 coreos.inst.install_dev=/dev/vda coreos.inst.platform_id=qemu console=ttyS0" fcos-bootstrap.iso
-coreos-installer iso kargs modify -a "ip=192.168.0.152::192.168.0.1:255.255.255.0::enp1s0:none nameserver=192.168.0.200 coreos.inst.install_dev=/dev/vda coreos.inst.platform_id=qemu console=ttyS0" fcos-master.iso
-
+coreos-installer iso kargs modify -a "ip=192.168.0.151::192.168.0.1:255.255.255.0::enp1s0:none nameserver=192.168.0.200 console=ttyS0" fcos-bootstrap.iso
+coreos-installer iso kargs modify -r ignition.platform.id=metal=qemu fcos-bootstrap.iso
+coreos-installer iso kargs modify -a "ip=192.168.0.152::192.168.0.1:255.255.255.0::enp1s0:none nameserver=192.168.0.200 console=ttyS0" fcos-master.iso
+coreos-installer iso kargs modify -r ignition.platform.id=metal=qemu fcos-master.iso
 
 # embed ignition in ISO
 coreos-installer iso ignition embed -fi bootstrap-merged.ign fcos-bootstrap.iso
@@ -51,9 +52,5 @@ boot fcos.iso
 
 run:
 
-sudo coreos-installer \
-    install \
-    /dev/sda \
-    --firstboot-args='console=tty0 rd.neednet=1 rd.net.timeout.carrier=30 coreos.inst.platform_id=qemu' \
-    --insecure-ignition \
-    --ignition-url=http://infra1.ocp4.example.com:8080/master.ign
+sudo coreos-installer install /dev/vda --insecure-ignition --ignition-url=http://192.168.0.200/bootstrap-merged.ign
+sudo coreos-installer install /dev/vda --insecure-ignition --ignition-url=http://192.168.0.200/master-merged.ign
