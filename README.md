@@ -107,6 +107,7 @@ cd okd4-lab
 
 ```bash
 sudo cp -rv dns/etc/* /etc/
+sudo systemctl restart named
 ```
 
 ### download OpenShift CLI and Installer
