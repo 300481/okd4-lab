@@ -103,6 +103,16 @@ git clone https://github.com/300481/okd4-lab.git
 cd okd4-lab
 ```
 
+### adjust IP setting for your setup
+
+Adjust the following files:
+
+- ```./okd/install-config.yaml```
+- ```./dns/etc/named.conf```
+- ```./dns/etc/zones/db.lab```
+
+Keep them in your mind and also adjust the installation commands according to your setup
+
 ### copy DNS Server config
 
 ```bash
