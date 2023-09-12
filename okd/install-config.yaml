@@ -23,11 +23,3 @@ platform:
   none: {}
 pullSecret: REDACTED
 sshKey: REDACTED
-imageContentSources:
-- mirrors:
-  - registry.lab:5000/okd
-  source: quay.io/openshift/okd
-- mirrors:
-  - registry.lab:5000/okd
-  source: quay.io/openshift/okd-content
-
