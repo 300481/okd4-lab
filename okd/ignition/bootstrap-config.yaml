@@ -12,42 +12,9 @@ storage:
         inline: |
           [updates]
           enabled = false
-    - path: /etc/systemd/network/25-enp1s0.link
-      mode: 0644
-      contents:
-        inline: |
-          [Match]
-          MACAddress=52:54:00:11:22:34
-          [Link]
-          Name=enp1s0
-    - path: /etc/NetworkManager/system-connections/enp1s0.nmconnection
-      mode: 0600
-      overwrite: true
-      contents:
-        inline: |
-          [connection]
-          type=ethernet
-          interface-name=enp1s0
-
-          [ethernet]
-          mac-address=52:54:00:11:22:34
-
-          [ipv4]
-          method=manual
-          addresses=192.168.0.151/24
-          gateway=192.168.0.1
-          dns=192.168.0.200
-          dns-search=okd.lab
     - path: /etc/hostname
       mode: 0420
       overwrite: true
       contents:
         inline: |
           bootstrap.okd.lab
-kernel_arguments:
-  should_exist:
-    - ip=192.168.0.151::192.168.0.1:255.255.255.0::enp1s0:none
-    - nameserver=192.168.0.200
-    - coreos.inst.install_dev=/dev/vda
-    - coreos.inst.platform_id=qemu
-    - console=ttyS0
