@@ -172,6 +172,27 @@ sudo mv fcos-*.iso /usr/share/nginx/html/okd4/
 
 ### create ignition files for bootstrap and master node
 
+#### create SSH keys
+
+[Documentation](https://docs.okd.io/4.13/installing/installing_bare_metal/installing-bare-metal.html#installation-bare-metal-config-yaml_installing-bare-metal)
+
+```bash
+ssh-keygen -t ecdsa -b 521 -f okd4
+cat okd4.pub
+```
+
+Add the output in ```install-config.yaml``` at ```sshKey: 'REDACTED'```
+
+#### get Image Pull Secret
+
+[Documentation](https://docs.okd.io/4.13/installing/installing_bare_metal/installing-bare-metal.html#installation-bare-metal-config-yaml_installing-bare-metal)
+
+Go to [Red Hat OpenShift Cluster Manager](https://console.redhat.com/openshift/install/pull-secret) and copy the pull secret.
+
+Add it in ```install-config.yaml``` at ```pullSecret: 'REDACTED'```
+
+#### generate the ignition
+
 ```bash
 alias butane='podman run --rm --interactive       \
               --security-opt label=disable        \
